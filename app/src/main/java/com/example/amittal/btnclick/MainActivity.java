@@ -1,7 +1,5 @@
 package com.example.amittal.btnclick;
 
-import java.util.ArrayList;
-
 import android.Manifest;
 import android.content.ContentProviderOperation;
 import android.content.ContentResolver;
@@ -18,6 +16,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -55,9 +55,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         TextView tv = (TextView) findViewById(R.id.textView2);
         tv.setText("Aviral");
         Toast.makeText(getBaseContext(), "You Pressed Me...!", Toast.LENGTH_SHORT).show();
-        if(isReadStorageAllowed()){
+        if (isReadStorageAllowed()) {
             //If permission is already having then showing the toast
-            Toast.makeText(MainActivity.this,"You already have the permission",Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, "You already have the permission", Toast.LENGTH_LONG).show();
             //ContentResolver contactAdder = new
             //crContacts = getContactCursor(getContentResolver(), "");
             //crContacts.moveToFirst();
@@ -74,9 +74,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static Cursor getContactCursor(ContentResolver contactHelper,
                                           String startsWith) {
 
-        String[] projection = { ContactsContract.CommonDataKinds.Phone._ID,
+        String[] projection = {ContactsContract.CommonDataKinds.Phone._ID,
                 ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
-                ContactsContract.CommonDataKinds.Phone.NUMBER };
+                ContactsContract.CommonDataKinds.Phone.NUMBER};
         Cursor cur = null;
 
         try {
@@ -114,16 +114,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return false;
     }
 
-    private void requestStoragePermission(){
+    private void requestStoragePermission() {
 
-        if (ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.WRITE_CONTACTS)){
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_CONTACTS)) {
             //If the user has denied the permission previously your code will come to this block
             //Here you can explain why you need this permission
             //Explain here why you need this permission
         }
 
         //And finally ask for the permission
-        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.WRITE_CONTACTS},STORAGE_PERMISSION_CODE);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_CONTACTS}, STORAGE_PERMISSION_CODE);
     }
 
     @Override
@@ -149,8 +149,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>();
         ops.add(ContentProviderOperation.newInsert(ContactsContract.RawContacts.CONTENT_URI).withValue(ContactsContract.RawContacts.ACCOUNT_TYPE, null).withValue(ContactsContract.RawContacts.ACCOUNT_NAME, null).build());
-        ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI).withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0).withValue(ContactsContract.Data.MIMETYPE,ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE).withValue(ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME,firstName).build());
-        ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI).withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0).withValue(ContactsContract.Data.MIMETYPE,ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE).withValue(ContactsContract.CommonDataKinds.Phone.NUMBER, mobileNumber).withValue(ContactsContract.CommonDataKinds.Phone.TYPE, ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE).build());
+        ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI).withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0).withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE).withValue(ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME, firstName).build());
+        ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI).withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0).withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE).withValue(ContactsContract.CommonDataKinds.Phone.NUMBER, mobileNumber).withValue(ContactsContract.CommonDataKinds.Phone.TYPE, ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE).build());
         try {
             contactAdder.applyBatch(ContactsContract.AUTHORITY, ops);
         } catch (Exception e) {

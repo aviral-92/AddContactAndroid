@@ -11,7 +11,6 @@
     tools:context="com.example.amittal.btnclick.MainActivity">
 
     <TextView
-        android:text="TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textView2"
@@ -20,7 +19,9 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginRight="82dp"
-        android:layout_marginEnd="82dp" />
+        android:layout_marginEnd="82dp"
+        android:layout_toRightOf="@+id/button"
+        android:layout_toEndOf="@+id/button" />
 
     <Button
         android:text="Button"
@@ -31,18 +32,6 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="144dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Application"
-        android:id="@+id/textView"
-        android:layout_marginRight="17dp"
-        android:layout_marginEnd="17dp"
-        android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/button"
-        android:layout_toStartOf="@+id/button"
-        android:layout_marginTop="26dp" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -70,14 +59,14 @@
         android:id="@+id/textView3" />
 
     <TextView
-        android:text="Mobile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView3"
+        android:text="Add Contact"
+        android:id="@+id/textView"
+        android:layout_marginTop="14dp"
+        android:layout_alignParentTop="true"
         android:layout_alignLeft="@+id/textView3"
-        android:layout_alignStart="@+id/textView3"
-        android:layout_marginTop="48dp"
-        android:id="@+id/textView4" />
+        android:layout_alignStart="@+id/textView3" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -87,6 +76,16 @@
         android:id="@+id/Mobile"
         android:layout_alignBaseline="@+id/textView4"
         android:layout_alignBottom="@+id/textView4"
-        android:layout_alignLeft="@+id/button"
-        android:layout_alignStart="@+id/button" />
+        android:layout_alignLeft="@+id/email"
+        android:layout_alignStart="@+id/email" />
+
+    <TextView
+        android:text="Mobile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="49dp"
+        android:id="@+id/textView4"
+        android:layout_below="@+id/textView3"
+        android:layout_alignRight="@+id/textView3"
+        android:layout_alignEnd="@+id/textView3" />
 </RelativeLayout>
