@@ -17,13 +17,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.amittal.btnclick.add.AddContact;
+
 import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final int PICK_CONTACT_REQUEST = 1;
-    private int STORAGE_PERMISSION_CODE = 1;
+    private int WRITE_CONTACT_PERMISSION_CODE = 1;
     private Cursor crContacts;
 
     private TextView mResult;
@@ -34,8 +36,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private EditText name;
     private EditText mobile;
     Button btnClickMe;
-    String Fname = null;
-    String Mob = null;
+    //String Fname = null;
+    //String Mob = null;
 
 
     @Override
@@ -55,23 +57,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         TextView tv = (TextView) findViewById(R.id.textView2);
         tv.setText("Aviral");
         Toast.makeText(getBaseContext(), "You Pressed Me...!", Toast.LENGTH_SHORT).show();
-        if (isReadStorageAllowed()) {
+        AddContact addContact = new AddContact();
+        if (isWriteContactAllowed()) {
             //If permission is already having then showing the toast
             Toast.makeText(MainActivity.this, "You already have the permission", Toast.LENGTH_LONG).show();
-            //ContentResolver contactAdder = new
-            //crContacts = getContactCursor(getContentResolver(), "");
-            //crContacts.moveToFirst();
-            insertContact(getContentResolver(), getName().getText().toString(), getMobile().getText().toString());
+            addContact.insertContact(getContentResolver(), getName().getText().toString(), getMobile().getText().toString());
             //Existing the method with return
             return;
+        }else {
+            requestWriteContactPermission();
+            addContact.insertContact(getContentResolver(), getName().getText().toString(), getMobile().getText().toString());
         }
-        requestStoragePermission();
-        //mEmail = mEmailEditText.getText().toString();
-        //startActivityForResult(new Intent(Intent.ACTION_PICK, Contacts.CONTENT_URI), PICK_CONTACT_REQUEST);
-
     }
 
-    public static Cursor getContactCursor(ContentResolver contactHelper,
+    /*public static Cursor getContactCursor(ContentResolver contactHelper,
                                           String startsWith) {
 
         String[] projection = {ContactsContract.CommonDataKinds.Phone._ID,
@@ -101,9 +100,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         return cur;
-    }
+    }*/
 
-    private boolean isReadStorageAllowed() {
+    private boolean isWriteContactAllowed() {
         //Getting the permission status
         int result = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_CONTACTS);
 
@@ -114,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return false;
     }
 
-    private void requestStoragePermission() {
+    private void requestWriteContactPermission() {
 
         if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_CONTACTS)) {
             //If the user has denied the permission previously your code will come to this block
@@ -123,14 +122,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         //And finally ask for the permission
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_CONTACTS}, STORAGE_PERMISSION_CODE);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_CONTACTS}, WRITE_CONTACT_PERMISSION_CODE);
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
         //Checking the request code of our request
-        if (requestCode == STORAGE_PERMISSION_CODE) {
+        if (requestCode == WRITE_CONTACT_PERMISSION_CODE) {
 
             //If permission is granted
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -143,9 +142,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
     }
-//    .withValue(ContactsContract.CommonDataKinds.Phone.NUMBER,mobileNumber).withValue(ContactsContract.CommonDataKinds.Phone.TYPE, ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE)
 
-    public boolean insertContact(ContentResolver contactAdder, String firstName, String mobileNumber) {
+    /*public boolean insertContact(ContentResolver contactAdder, String firstName, String mobileNumber) {
 
         ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>();
         ops.add(ContentProviderOperation.newInsert(ContactsContract.RawContacts.CONTENT_URI).withValue(ContactsContract.RawContacts.ACCOUNT_TYPE, null).withValue(ContactsContract.RawContacts.ACCOUNT_NAME, null).build());
@@ -159,10 +157,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             e.printStackTrace();
             return false;
         }
-        MainActivity activity = new MainActivity();
-        //Toast.makeText(activity, "returning True", Toast.LENGTH_LONG).show();
         return true;
-    }
+    }*/
 
     public EditText getName() {
         return name;
